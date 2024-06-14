@@ -1,3 +1,27 @@
 services:
-  cars:
-    image: python
+  rmq_msk:
+    image: rabbitmq:3.13.1-management-alpine
+    ports:
+      - "127.0.0.1:11001:5672"    # AMPQ 0.9.1
+      - "127.0.0.1:11002:15672"  # admin webUI, HTTP API
+      - "127.0.0.1:11003:15675"  # MQTT-over-WebSockets clients (only if the Web MQTT plugin is enabled)
+    volumes:
+      - ./data/volumes/rmq_msk:/var/lib/rabbitmq:rw
+
+  rmq_spb:
+    image: rabbitmq:3.13.1-management-alpine
+    ports:
+      - "127.0.0.1:12001:5672"
+      - "127.0.0.1:12002:15672"
+      - "127.0.0.1:12003:15675"
+    volumes:
+      - ./data/volumes/rmq_spb:/var/lib/rabbitmq:rw
+
+  rmq_cluster1:
+    image: rabbitmq:3.13.1-management-alpine
+    ports:
+      - "127.0.0.1:20001:5672"
+      - "127.0.0.1:20002:15672"
+      - "127.0.0.1:20003:15675"
+    volumes:
+      - ./data/volumes/rmq_cluster1:/var/lib/rabbitmq:rw
