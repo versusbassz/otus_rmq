@@ -1,5 +1,5 @@
 services:
-  rmq_msk:
+  rmq_sensors_msk:
     image: rabbitmq:3.13.1-management-alpine
     ports:
       - "127.0.0.1:11001:5672"    # AMPQ 0.9.1
@@ -8,7 +8,7 @@ services:
 #     volumes:
 #       - ./data/volumes/rmq_msk:/var/lib/rabbitmq:rw
 
-  rmq_spb:
+  rmq_sensors_spb:
     image: rabbitmq:3.13.1-management-alpine
     ports:
       - "127.0.0.1:12001:5672"

@@ -13,12 +13,12 @@ from .id_generator import REGION_MSK, REGION_SPB
 
 _AUTH = 'guest:guest'
 _HOSTS_DOCKER: dict[str, str] = {
-    REGION_SPB: 'rmq_spb:5672',
-    REGION_MSK: 'rmq_msk:5672',
+    REGION_MSK: 'rmq_sensors_msk:5672',
+    REGION_SPB: 'rmq_sensors_spb:5672',
 }
 _HOSTS: dict[str, str] = {
-    REGION_SPB: '127.0.0.1:12001',
     REGION_MSK: '127.0.0.1:11001',
+    REGION_SPB: '127.0.0.1:12001',
 }
 
 

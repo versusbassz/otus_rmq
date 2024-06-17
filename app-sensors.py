@@ -1,5 +1,5 @@
 import asyncio
 
-from cars.gen.app import main
+from cars.sensors.app import main
 
 asyncio.run(main())
