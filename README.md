@@ -16,3 +16,9 @@ pip install -r requirements.txt
 pip install -r requirements.in
 pip freeze requirements.txt
 ```
+
+## Dependencies
+
+### aio_pika
+- https://aio-pika.readthedocs.io/en/latest/index.html
+- https://github.com/mosquito/aio-pika
