@@ -1,1 +1,2 @@
 aio-pika==9.4.1
+ansible==9.6.1

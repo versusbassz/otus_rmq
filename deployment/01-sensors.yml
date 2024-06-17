@@ -1,0 +1,61 @@
+- hosts: sensors
+  connection: docker
+  tasks:
+    - name: "Create vhost"
+      community.rabbitmq.rabbitmq_vhost:
+        name: /sensors
+        state: present
+
+    - name: 'Edit "guest" user'
+      community.rabbitmq.rabbitmq_user:
+        user: guest
+        password: guest
+        update_password: always
+        tags: administrator
+        permissions:
+          - vhost: /
+            configure_priv: .*
+            read_priv: .*
+            write_priv: .*
+          - vhost: /sensors
+            configure_priv: .*
+            read_priv: .*
+            write_priv: .*
+        state: present
+
+    - name: 'Create "sensors" user'
+      community.rabbitmq.rabbitmq_user:
+        user: sensors
+        password: password
+        update_password: always
+        vhost: /sensors
+        configure_priv: .*
+        read_priv: .*
+        write_priv: .*
+        state: present
+
+    - name: Create topic exchange on vhost
+      community.rabbitmq.rabbitmq_exchange:
+        name: sensors
+        type: fanout
+        durable: true
+        state: present
+        vhost: "/sensors"
+        login_user: guest
+        login_password: guest
+
+    - name: "Create queue"
+      community.rabbitmq.rabbitmq_queue:
+        name: sensors
+        durable: true
+        state: present
+        vhost: "/sensors"
+
+    - name: Bind exchange <-> queue
+      community.rabbitmq.rabbitmq_binding:
+        name: sensors
+        destination: sensors
+        type: queue
+        routing_key: ""
+        state: present
+        vhost: "/sensors"

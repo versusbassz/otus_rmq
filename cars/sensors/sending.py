@@ -11,7 +11,8 @@ from aio_pika import ExchangeType
 from .id_generator import REGION_MSK, REGION_SPB
 
 
-_AUTH = 'guest:guest'
+_AUTH = 'sensors:password'
+# _AUTH = 'guest:guest'
 _HOSTS_DOCKER: dict[str, str] = {
     REGION_MSK: 'rmq_sensors_msk:5672',
     REGION_SPB: 'rmq_sensors_spb:5672',
@@ -20,6 +21,8 @@ _HOSTS: dict[str, str] = {
     REGION_MSK: '127.0.0.1:11001',
     REGION_SPB: '127.0.0.1:12001',
 }
+
+EXCHANGE_NAME = 'sensors'
 
 
 @dataclass
@@ -47,11 +50,7 @@ class MessageSender:
         url = f'amqp://{_AUTH}@{_HOSTS[self.region]}/'
         self.connection = await aio_pika.connect_robust(url)
         channel = await self.connection.channel()
-
-        self.exchange = await channel.declare_exchange('test_exchange', type=ExchangeType.FANOUT, durable=True)
-
-        queue = await channel.declare_queue('test_queue', durable=True)
-        await queue.bind(self.exchange, '')
+        self.exchange = await channel.declare_exchange(EXCHANGE_NAME, passive=True)
 
     async def send(self, msg: Report) -> None:
         msg = aio_pika.Message(body=msg.json().encode())

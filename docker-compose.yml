@@ -1,45 +1,54 @@
 services:
   rmq_sensors_msk:
-    image: rabbitmq:3.13.1-management-alpine
+    container_name: rmq_sensors_msk
+    build:
+      context: docker/
+      dockerfile: sensors.Dockerfile
     ports:
       - "127.0.0.1:11001:5672"    # AMPQ 0.9.1
       - "127.0.0.1:11002:15672"  # admin webUI, HTTP API
       - "127.0.0.1:11003:15675"  # MQTT-over-WebSockets clients (only if the Web MQTT plugin is enabled)
+#     image: rabbitmq:3.13.1-management-alpine
 #     volumes:
 #       - ./data/volumes/rmq_msk:/var/lib/rabbitmq:rw
 
   rmq_sensors_spb:
-    image: rabbitmq:3.13.1-management-alpine
+    container_name: rmq_sensors_spb
+    build:
+      context: docker/
+      dockerfile: sensors.Dockerfile
     ports:
       - "127.0.0.1:12001:5672"
       - "127.0.0.1:12002:15672"
       - "127.0.0.1:12003:15675"
+#     image: rabbitmq:3.13.1-management-alpine
 #     volumes:
 #       - ./data/volumes/rmq_spb:/var/lib/rabbitmq:rw
 
-  rmq_cluster1:
-    image: rabbitmq:3.13.1-management-alpine
-    ports:
-      - "127.0.0.1:21001:5672"
-      - "127.0.0.1:21002:15672"
-      - "127.0.0.1:21003:15675"
-#     volumes:
-#       - ./data/volumes/rmq_cluster1:/var/lib/rabbitmq:rw
 
-  rmq_cluster2:
-    image: rabbitmq:3.13.1-management-alpine
-    ports:
-      - "127.0.0.1:22001:5672"
-      - "127.0.0.1:22002:15672"
-      - "127.0.0.1:22003:15675"
-#     volumes:
-#       - ./data/volumes/rmq_cluster2:/var/lib/rabbitmq:rw
-
-  rmq_cluster3:
-    image: rabbitmq:3.13.1-management-alpine
-    ports:
-      - "127.0.0.1:23001:5672"
-      - "127.0.0.1:23002:15672"
-      - "127.0.0.1:23003:15675"
-#     volumes:
-#       - ./data/volumes/rmq_cluster3:/var/lib/rabbitmq:rw
+#   rmq_cluster1:
+#     image: rabbitmq:3.13.1-management-alpine
+#     ports:
+#       - "127.0.0.1:21001:5672"
+#       - "127.0.0.1:21002:15672"
+#       - "127.0.0.1:21003:15675"
+# #     volumes:
+# #       - ./data/volumes/rmq_cluster1:/var/lib/rabbitmq:rw
+#
+#   rmq_cluster2:
+#     image: rabbitmq:3.13.1-management-alpine
+#     ports:
+#       - "127.0.0.1:22001:5672"
+#       - "127.0.0.1:22002:15672"
+#       - "127.0.0.1:22003:15675"
+# #     volumes:
+# #       - ./data/volumes/rmq_cluster2:/var/lib/rabbitmq:rw
+#
+#   rmq_cluster3:
+#     image: rabbitmq:3.13.1-management-alpine
+#     ports:
+#       - "127.0.0.1:23001:5672"
+#       - "127.0.0.1:23002:15672"
+#       - "127.0.0.1:23003:15675"
+# #     volumes:
+# #       - ./data/volumes/rmq_cluster3:/var/lib/rabbitmq:rw
