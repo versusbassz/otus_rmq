@@ -1,9 +1,6 @@
-
-
-
 ## TODO
 
-- [x] data generator (`cars`)
+- [x] data generator (`gen`)
 - [ ] receivers queues + shovel/federation to the central queue
 - [ ] dockerized (compose)
 - [ ] xxx
@@ -13,6 +10,15 @@
 - [ ] MQTT in cars <-> receivers
 - [ ] xxx
 - [ ] xxx
+
+## How to run
+
+```shell
+python -m venv .venv
+source .venv/bin/activate
+
+python ./apps/cars/main.py
+```
 
 
 ## The message format
